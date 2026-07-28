@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  DOCTOR
+  RECEPTIONIST
+}
+
+enum QueueStatus {
+  WAITING
+  CALLED
+  IN_CONSULTATION
+  COMPLETED
+  CANCELLED
+  MISSED
+}
+
+model Hospital {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String?  @unique
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users    User[]
+  rooms    Room[]
+  patients Patient[]
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  password     String
+  role         UserRole
+  phone        String?
+  specialization String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  hospitalId Int
+  hospital   Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  assignedRooms   Room[]            @relation("CurrentRoomDoctor")
+  consultationLogs ConsultationLog[] @relation("DoctorConsultations")
+
+  @@index([hospitalId])
+  @@index([role])
+}
+
+model Room {
+  id             Int      @id @default(autoincrement())
+  roomNumber     String
+  name           String?
+  department     String?
+  averageMinutes Int      @default(10)
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  hospitalId Int
+  hospital   Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  currentDoctorId Int?
+  currentDoctor   User? @relation("CurrentRoomDoctor", fields: [currentDoctorId], references: [id], onDelete: SetNull)
+
+  queueEntries QueueEntry[]
+
+  @@unique([hospitalId, roomNumber])
+  @@index([hospitalId])
+  @@index([currentDoctorId])
+}
+
+model Patient {
+  id        String   @id @default(cuid())
+  name      String
+  age       Int?
+  phone     String
+  address   String?
+  gender    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hospitalId Int
+  hospital   Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+
+  queueEntries    QueueEntry[]
+  consultationLogs ConsultationLog[]
+
+  @@index([hospitalId])
+  @@index([phone])
+}
+
+model QueueEntry {
+  id          String      @id @default(cuid())
+  tokenNumber Int
+  issue       String?
+  status      QueueStatus @default(WAITING)
+  joinedAt    DateTime    @default(now())
+  calledAt    DateTime?
+  startedAt   DateTime?
+  completedAt DateTime?
+  cancelledAt DateTime?
+
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  roomId Int
+  room   Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  consultationLog ConsultationLog?
+
+  @@index([roomId, status])
+  @@index([patientId])
+  @@index([joinedAt])
+}
+
+model ConsultationLog {
+  id        String   @id @default(cuid())
+  notes     String?
+  diagnosis String?
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  doctorId Int
+  doctor   User @relation("DoctorConsultations", fields: [doctorId], references: [id], onDelete: Cascade)
+
+  queueEntryId String?     @unique
+  queueEntry   QueueEntry? @relation(fields: [queueEntryId], references: [id], onDelete: SetNull)
+
+  @@index([patientId])
+  @@index([doctorId])
+}
