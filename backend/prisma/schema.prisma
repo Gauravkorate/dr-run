@@ -26,6 +26,7 @@ enum QueueStatus {
 model Hospital {
   id        Int      @id @default(autoincrement())
   name      String
+  code      String @unique
   email     String?  @unique
   phone     String?
   address   String?

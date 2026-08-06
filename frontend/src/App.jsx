@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import HospitalRegistration from "./pages/HospitalRegistration";
+import StaffRegistration from "./pages/StaffRegistration";
 import LandingPage from "./pages/LandingPage";
 import RoleSelection from "./pages/RoleSelection";
 import ReceptionistLogin from "./pages/ReceptionistLogin";
@@ -14,6 +15,16 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
 
+        <Route
+          path="/hospital/register"
+          element={<HospitalRegistration />}
+        />
+
+        <Route
+          path="/staff/register"
+          element={<StaffRegistration />}
+        />
+        
         <Route
           path="/select-role"
           element={<RoleSelection />}
@@ -37,7 +48,7 @@ function App() {
         <Route
           path="/doctor/dashboard"
           element={<DoctorDashboard />}
-        />
+        />        
 
         <Route
           path="*"

@@ -65,21 +65,28 @@ function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: .8 }}
         >
-          <Link
-            to="/select-role"
-            className="primary-btn"
-          >
-            Enter Hospital
+<Link
+  to="/select-role"
+  className="primary-btn"
+>
+  Enter Hospital
 
-            <FaArrowRight />
-          </Link>
+  <FaArrowRight />
+</Link>
 
-          <a
-            href="#features"
-            className="secondary-btn"
-          >
-            Explore Features
-          </a>
+<Link
+  to="/hospital/register"
+  className="secondary-btn"
+>
+  Register Hospital
+</Link>
+
+<a
+  href="#features"
+  className="secondary-btn"
+>
+  Explore Features
+</a>
 
         </motion.div>
 

@@ -70,6 +70,13 @@ function Navbar() {
         </ul>
 
         <Link
+          to="/hospital/register"
+          className="registerBtn"
+          onClick={closeMenu}
+        >
+          Register
+        </Link>
+        <Link
           to="/select-role"
           className="loginBtn"
           onClick={closeMenu}

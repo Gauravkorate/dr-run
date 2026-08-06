@@ -4,8 +4,20 @@ const router = express.Router();
 
 const {
   register,
-  login
+  login,
+  registerHospital,
+  registerStaff,
 } = require("../controllers/auth.controller");
+
+router.post(
+  "/register-hospital",
+  registerHospital
+);
+
+router.post(
+  "/register-staff",
+  registerStaff
+);
 
 router.post("/register", register);
 

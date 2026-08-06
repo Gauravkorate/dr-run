@@ -1,35 +1,32 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaUserDoctor, FaLaptopMedical } from "react-icons/fa6";
+import {
+  FaUserDoctor,
+  FaLaptopMedical,
+  FaHospital,
+  FaUserPlus,
+} from "react-icons/fa6";
 
 import "./RoleSelection.css";
 
 function RoleSelection() {
   return (
     <div className="role-page">
-
       <motion.div
         className="role-box"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: .6 }}
+        transition={{ duration: 0.6 }}
       >
-
         <h1>Welcome to DR.Run</h1>
 
-        <p>
-          Choose your role to continue
-        </p>
+        <p>Choose your role to continue</p>
 
         <div className="role-container">
-
           <motion.div
-            whileHover={{
-              scale: 1.05
-            }}
+            whileHover={{ scale: 1.05 }}
             className="role-card"
           >
-
             <FaUserDoctor className="role-icon" />
 
             <h2>Doctor</h2>
@@ -45,16 +42,12 @@ function RoleSelection() {
             >
               Doctor Login
             </Link>
-
           </motion.div>
 
           <motion.div
-            whileHover={{
-              scale: 1.05
-            }}
+            whileHover={{ scale: 1.05 }}
             className="role-card"
           >
-
             <FaLaptopMedical className="role-icon" />
 
             <h2>Receptionist</h2>
@@ -70,13 +63,40 @@ function RoleSelection() {
             >
               Receptionist Login
             </Link>
-
           </motion.div>
-
         </div>
 
-      </motion.div>
+        <div className="registration-section">
+          <p className="registration-title">
+            New to DR.Run?
+          </p>
 
+          <div className="registration-actions">
+            <Link
+              to="/hospital/register"
+              className="registration-btn"
+            >
+              <FaHospital />
+              Register Hospital
+            </Link>
+
+            <Link
+              to="/staff/register"
+              className="registration-btn secondary"
+            >
+              <FaUserPlus />
+              Register as Staff
+            </Link>
+          </div>
+
+          <p className="registration-note">
+            Hospitals register first and receive a
+            unique hospital code. Doctors and
+            receptionists use that code to join
+            their hospital.
+          </p>
+        </div>
+      </motion.div>
     </div>
   );
 }
