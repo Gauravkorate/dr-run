@@ -66,19 +66,18 @@ function Hero() {
           transition={{ delay: .8 }}
         >
 <Link
-  to="/select-role"
+  to="/hospital/register"
   className="primary-btn"
 >
-  Enter Hospital
-
+  Register Hospital
   <FaArrowRight />
 </Link>
 
 <Link
-  to="/hospital/register"
+  to="/staff/register"
   className="secondary-btn"
 >
-  Register Hospital
+  Register as Staff
 </Link>
 
 <a

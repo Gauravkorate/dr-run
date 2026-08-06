@@ -69,13 +69,14 @@ function Navbar() {
           </li>
         </ul>
 
-        <Link
-          to="/hospital/register"
-          className="registerBtn"
-          onClick={closeMenu}
-        >
-          Register
-        </Link>
+<Link
+  to="/hospital/register"
+  className="registerBtn"
+  onClick={closeMenu}
+  style={{ marginLeft: "35px" }}
+>
+  Register Hospital
+</Link>
         <Link
           to="/select-role"
           className="loginBtn"

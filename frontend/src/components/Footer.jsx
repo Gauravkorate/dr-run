@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 
 import {
   FaArrowUp,
-  FaEnvelope,
   FaHeartPulse,
-  FaLocationDot,
 } from "react-icons/fa6";
 
 import "../styles/footer.css";
@@ -38,23 +36,7 @@ function Footer() {
               real-time communication.
             </p>
 
-            <div className="footer-contact-list">
-              <div className="footer-contact-item">
-                <FaLocationDot />
-
-                <span>
-                  Pune, Maharashtra, India
-                </span>
-              </div>
-
-              <div className="footer-contact-item">
-                <FaEnvelope />
-
-                <span>
-                  support@drrun.com
-                </span>
-              </div>
-            </div>
+             
           </div>
 
           <div className="footer-column">
